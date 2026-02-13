@@ -6,50 +6,47 @@ on:
 
 jobs:
 
-  Integracion:
+  IF:
     runs-on: ubuntu-latest
     steps:
-      - name: Obtener código fuente
-        uses: actions/checkout@v4
-
-  Construccion:
-    needs: Integracion
-    runs-on: ubuntu-latest
-    steps:
-      - name: Construyendo aplicación
+      - name: IF - Instruction Fetch
         run: |
-          echo "Preparando entorno..."
+          echo "IF: Obteniendo instruccion desde memoria..."
           sleep 2
-          echo "Compilando proyecto..."
-          sleep 3
-          echo "Build exitoso."
 
-  Pruebas:
-    needs: Construccion
+  ID:
+    needs: IF
     runs-on: ubuntu-latest
     steps:
-      - name: Ejecutando pruebas
+      - name: ID - Instruction Decode
         run: |
-          echo "Corriendo pruebas unitarias..."
-          sleep 3
-          echo "Pruebas correctas."
-
-  Empaquetado:
-    needs: Pruebas
-    runs-on: ubuntu-latest
-    steps:
-      - name: Generando artefacto
-        run: |
-          echo "Empaquetando aplicación..."
+          echo "ID: Decodificando instruccion y leyendo registros..."
           sleep 2
-          echo "Archivo listo para distribución."
 
-  Despliegue:
-    needs: Empaquetado
+  EX:
+    needs: ID
     runs-on: ubuntu-latest
     steps:
-      - name: Publicando en producción
+      - name: EX - Execute
         run: |
-          echo "Subiendo al servidor..."
+          echo "EX: Ejecutando operacion en la ALU..."
           sleep 2
-          echo "Aplicación desplegada."
+
+  MEM:
+    needs: EX
+    runs-on: ubuntu-latest
+    steps:
+      - name: MEM - Memory Access
+        run: |
+          echo "MEM: Accediendo a memoria RAM..."
+          sleep 2
+
+  WB:
+    needs: MEM
+    runs-on: ubuntu-latest
+    steps:
+      - name: WB - Write Back
+        run: |
+          echo "WB: Escribiendo resultado en registro..."
+          sleep 2
+          echo "Instruccion completada correctamente."

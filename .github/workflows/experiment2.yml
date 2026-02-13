@@ -1,0 +1,43 @@
+name: Experimento 2 - Manejo de Errores
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  Compilacion:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          echo "Compilando aplicación..."
+          sleep 3
+          echo "Build correcto."
+
+  Pruebas_Unitarias:
+    needs: Compilacion
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ejecutar pruebas (forzando error)
+        run: |
+          echo "Ejecutando pruebas..."
+          sleep 2
+          echo "Error detectado!"
+          exit 1
+
+  Despliegue_Produccion:
+    needs: Pruebas_Unitarias
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy
+        run: |
+          echo "Intentando desplegar..."
+          sleep 2
+          echo "Producción lista."

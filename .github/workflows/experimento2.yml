@@ -14,7 +14,7 @@ jobs:
   ID:
     needs: IF
     runs-on: ubuntu-latest
-    steps:
+    steps: 
       - run: echo "ID: Decode"
 
   EX:

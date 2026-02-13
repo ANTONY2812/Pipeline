@@ -23,7 +23,7 @@ jobs:
 
   EX_Inst1:
     needs: ID
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
     steps:
       - run: |
           echo "EX: Ejecutando instruccion 1 en ALU"

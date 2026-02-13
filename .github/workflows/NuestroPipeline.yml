@@ -1,4 +1,4 @@
-name: Laboratorio de Pipeline Sistémicos
+name: Nuestro Pipeline 
 
 on:
   push:
@@ -6,43 +6,50 @@ on:
 
 jobs:
 
-  Compilacion:
+  Integracion:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout del código
+      - name: Obtener código fuente
         uses: actions/checkout@v4
 
-      - name: Simulando Build
-        run: |
-          echo "Iniciando compilación..."
-          sleep 3
-          echo "Compilando binarios..."
-          sleep 3
-          echo "Compilación terminada correctamente."
-
-  Pruebas_Unitarias:
-    needs: Compilacion
+  Construccion:
+    needs: Integracion
     runs-on: ubuntu-latest
+    steps:
+      - name: Construyendo aplicación
+        run: |
+          echo "Preparando entorno..."
+          sleep 2
+          echo "Compilando proyecto..."
+          sleep 3
+          echo "Build exitoso."
 
+  Pruebas:
+    needs: Construccion
+    runs-on: ubuntu-latest
     steps:
       - name: Ejecutando pruebas
         run: |
-          echo "Iniciando pruebas unitarias..."
+          echo "Corriendo pruebas unitarias..."
           sleep 3
-          echo "Validando integridad del código..."
-          sleep 3
-          echo "Todas las pruebas pasaron."
+          echo "Pruebas correctas."
 
-  Despliegue_Produccion:
-    needs: Pruebas_Unitarias
+  Empaquetado:
+    needs: Pruebas
     runs-on: ubuntu-latest
-
     steps:
-      - name: Despliegue del sistema
+      - name: Generando artefacto
         run: |
-          echo "Preparando entorno de producción..."
-          sleep 3
-          echo "Subiendo archivos al servidor..."
-          sleep 3
-          echo "Sistema desplegado exitosamente."
+          echo "Empaquetando aplicación..."
+          sleep 2
+          echo "Archivo listo para distribución."
+
+  Despliegue:
+    needs: Empaquetado
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publicando en producción
+        run: |
+          echo "Subiendo al servidor..."
+          sleep 2
+          echo "Aplicación desplegada."

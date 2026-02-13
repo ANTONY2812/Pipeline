@@ -1,4 +1,4 @@
-name: Experimento 2 - Manejo de Errores
+name: Experimento 2
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
   ID:
     needs: IF
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - run: echo "ID: Decode"
 
   EX:

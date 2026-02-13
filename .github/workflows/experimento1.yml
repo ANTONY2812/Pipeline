@@ -1,0 +1,53 @@
+name: Experimento 1 - Paralelismo
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  Compilacion:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Compilando sistema
+        run: |
+          echo "Iniciando compilación..."
+          sleep 5
+          echo "Compilación finalizada."
+
+  Pruebas_Frontend:
+    needs: Compilacion
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test Frontend
+        run: |
+          echo "Ejecutando pruebas de interfaz..."
+          sleep 8
+          echo "Frontend correcto."
+
+  Pruebas_Backend:
+    needs: Compilacion
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test Backend
+        run: |
+          echo "Ejecutando pruebas de lógica del servidor..."
+          sleep 8
+          echo "Backend correcto."
+
+  Despliegue_Produccion:
+    needs: [Pruebas_Frontend, Pruebas_Backend]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy
+        run: |
+          echo "Publicando aplicación..."
+          sleep 3
+          echo "Sistema en producción."

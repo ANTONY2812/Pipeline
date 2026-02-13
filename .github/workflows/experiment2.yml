@@ -6,38 +6,34 @@ on:
 
 jobs:
 
-  Compilacion:
+  IF:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - run: echo "IF: Fetch instruccion"
 
-      - name: Build
-        run: |
-          echo "Compilando aplicación..."
-          sleep 3
-          echo "Build correcto."
-
-  Pruebas_Unitarias:
-    needs: Compilacion
+  ID:
+    needs: IF
     runs-on: ubuntu-latest
-
     steps:
-      - name: Ejecutar pruebas (forzando error)
+      - run: echo "ID: Decode"
+
+  EX:
+    needs: ID
+    runs-on: ubuntu-latest
+    steps:
+      - name: Error en ALU
         run: |
-          echo "Ejecutando pruebas..."
-          sleep 2
-          echo "Error detectado!"
+          echo "EX: Error aritmetico (division por cero)"
           exit 1
 
-  Despliegue_Produccion:
-    needs: Pruebas_Unitarias
+  MEM:
+    needs: EX
     runs-on: ubuntu-latest
-
     steps:
-      - name: Deploy
-        run: |
-          echo "Intentando desplegar..."
-          sleep 2
-          echo "Producción lista."
+      - run: echo "MEM: Acceso memoria"
+
+  WB:
+    needs: MEM
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "WB: Escritura final"

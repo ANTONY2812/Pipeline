@@ -1,5 +1,4 @@
-name: Experimento 2
-
+name: EXPERIMENTO 2
 on:
   push:
     branches: [ "main" ]
@@ -7,33 +6,50 @@ on:
 jobs:
 
   IF:
+    name: IF - Instruction Fetch
     runs-on: ubuntu-latest
     steps:
-      - run: echo "IF: Fetch instruccion"
+      - run: |
+          echo "IF: Buscando instruccion en memoria..."
+          sleep 2
+          echo "Instruccion cargada en el pipeline."
 
   ID:
+    name: ID - Instruction Decode
     needs: IF
     runs-on: ubuntu-latest
     steps:
-      - run: echo "ID: Decode"
+      - run: |
+          echo "ID: Decodificando instruccion..."
+          sleep 2
+          echo "Registros leidos correctamente."
 
   EX:
+    name: EX - Execute (FALLA)
     needs: ID
     runs-on: ubuntu-latest
     steps:
-      - name: Error en ALU
+      - name: Simulando fallo aritmetico
         run: |
-          echo "EX: Error aritmetico (division por cero)"
+          echo "EX: Ejecutando operacion ALU..."
+          sleep 2
+          echo "ERROR: Division entre cero detectada"
           exit 1
 
   MEM:
+    name: MEM - Memory Access
     needs: EX
     runs-on: ubuntu-latest
     steps:
-      - run: echo "MEM: Acceso memoria"
+      - run: |
+          echo "MEM: Accediendo a memoria..."
+          sleep 2
 
   WB:
+    name: WB - Write Back
     needs: MEM
     runs-on: ubuntu-latest
     steps:
-      - run: echo "WB: Escritura final"
+      - run: |
+          echo "WB: Escribiendo resultado en registro..."
+          sleep 2

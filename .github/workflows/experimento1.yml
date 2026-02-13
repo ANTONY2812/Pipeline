@@ -6,48 +6,49 @@ on:
 
 jobs:
 
-  Compilacion:
+  IF:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Descargar código
-        uses: actions/checkout@v4
+      - run: |
+          echo "IF: Fetch de instrucciones"
+          sleep 2
 
-      - name: Compilando sistema
-        run: |
-          echo "Iniciando compilación..."
+  ID:
+    needs: IF
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "ID: Decodificacion"
+          sleep 2
+
+  EX_Inst1:
+    needs: ID
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "EX: Ejecutando instruccion 1 en ALU"
           sleep 5
-          echo "Compilación finalizada."
 
-  Pruebas_Frontend:
-    needs: Compilacion
+  EX_Inst2:
+    needs: ID
     runs-on: ubuntu-latest
-
     steps:
-      - name: Test Frontend
-        run: |
-          echo "Ejecutando pruebas de interfaz..."
-          sleep 8
-          echo "Frontend correcto."
+      - run: |
+          echo "EX: Ejecutando instruccion 2 en ALU"
+          sleep 5
 
-  Pruebas_Backend:
-    needs: Compilacion
+  MEM:
+    needs: [EX_Inst1, EX_Inst2]
     runs-on: ubuntu-latest
-
     steps:
-      - name: Test Backend
-        run: |
-          echo "Ejecutando pruebas de lógica del servidor..."
-          sleep 8
-          echo "Backend correcto."
+      - run: |
+          echo "MEM: Acceso a memoria"
+          sleep 2
 
-  Despliegue_Produccion:
-    needs: [Pruebas_Frontend, Pruebas_Backend]
+  WB:
+    needs: MEM
     runs-on: ubuntu-latest
-
     steps:
-      - name: Deploy
-        run: |
-          echo "Publicando aplicación..."
-          sleep 3
-          echo "Sistema en producción."
+      - run: |
+          echo "WB: Escritura en registros"
+          sleep 2
